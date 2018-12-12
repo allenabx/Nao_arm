@@ -36,3 +36,5 @@ def getPos(want_Ang):
     pos = lib.Kinematics(angles)
 
     return [pos.x, pos.y, pos.z]
+
+
