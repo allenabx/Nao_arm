@@ -143,20 +143,20 @@ class Env(object):
             _fields_ = [
                 ("x", ctypes.c_float),
                 ("y", ctypes.c_float),
-                ("z", ctypes.c_float)
+                ("z", ctypes.c_float),
+                ("elbowx", ctypes.c_float),
+                ("elbowy", ctypes.c_float),
+                ("elbowz", ctypes.c_float)
             ]
         self.lib.Kinematics.restype = Pos
 
-        angel_list = []
-
-        for i in range(N_JOINTS):https://github.com/allenabx/Nao_arm_2/blob/master/1234.py
-            angel_list.append(self.rad2ang(self.angles[self.arm0 + i]))
-
+        state = []
 
         pos = self.lib.Kinematics(self.angles)
 
-        angel_list[0:0] = self.target[:]
-        angel_list[0:0] = [pos.x, pos.y, pos.z]
+        state[0:0] = self.target[:]
+        state[0:0] = [pos.x, pos.y, pos.z, pos.elbowx, pos.elbowy, pos.elbowz]
 
-        return torch.tensor(angel_list).type(torch.FloatTensor)
+        return torch.tensor(state).type(torch.FloatTensor)
+
 

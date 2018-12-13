@@ -1,6 +1,7 @@
 //
 // Created by Chen on 2018/11/19.
 //
+//#include <tclDecls.h>
 #include "Kinematics.h"
 
 extern "C"
@@ -29,9 +30,13 @@ Pos Kinematics(float* angles)
             .translate(dimensions.lowerArmLength, 0, 0);
 
     Vector3<float> res = rel_parts[shoulder + 3].rotation * Vector3<float>(0, 0, 0) + rel_parts[shoulder + 3].translation;
+    Vector3<float> elbow_res = rel_parts[shoulder + 2].rotation * Vector3<float>(0, 0, 0) + rel_parts[shoulder + 2].translation;
     Pos pos;
     pos.x = res.x;
     pos.y = res.y;
     pos.z = res.z;
+    pos.elbowx = elbow_res.x;
+    pos.elbowy = elbow_res.y;
+    pos.elbowz = elbow_res.z;
     return pos;
 }

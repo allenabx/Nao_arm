@@ -14,17 +14,22 @@ class Net(nn.Module):
         super(Net, self).__init__()
         self.fc1 = nn.Linear(N_STATES , 50)
         self.fc1.weight.data.normal_(0, 0.01)   # initialization
+        self.fc1_bn = nn.BatchNorm1d(50)
         self.out = nn.Linear(50, N_ACTIONS)
         self.out.weight.data.normal_(0, 0.01)   # initialization
         self.epsilon_max = EPSILON_MAX
         self.epsilon_increase = EPSILON_INCREASE
         self.epsilon = 0 if self.epsilon_increase is not None else self.epsilon_max
 
+
     def forward(self, x):
         x = self.fc1(x)
+        x = self.fc1_bn(x)
         x = F.relu(x)
         actions_value = self.out(x)
         return actions_value
+
+
 
 
 class DQN(object):
@@ -39,12 +44,15 @@ class DQN(object):
             self.eval_net.cuda()
             self.target_net.cuda()
             self.loss_func.cuda()
+        self.plt_loss = []
 
     def choose_action(self, x):
+        self.eval_net.eval()
+        self.target_net.eval()
         # input only one sample
         if np.random.uniform() < EPSILON:   # greedy
-            actions_value = self.eval_net.forward(x)
-            action = int(torch.max(actions_value, 0)[1])
+            actions_value = self.eval_net.forward(x.reshape(1, -1))
+            action = int(torch.max(actions_value.squeeze(), 0)[1])
         else:   # random
             action = np.random.randint(0, N_ACTIONS)
         return action
@@ -84,3 +92,5 @@ class DQN(object):
         self.optimizer.step()
 
         self.eval_net.epsilon = self.eval_net.epsilon + self.eval_net.epsilon_increase if self.eval_net.epsilon < self.eval_net.epsilon_max else self.eval_net.epsilon_max
+        self.plt_loss.append(loss.data.numpy())
+        # print(self.plt_loss)

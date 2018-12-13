@@ -10,6 +10,8 @@
 #include "Pose3D.h"
 #include "RobotDimensions.h"
 
+using namespace std;
+
 //# define M_E		2.7182818284590452354	/* e */
 //# define M_LOG2E	1.4426950408889634074	/* log_2 e */
 //# define M_LOG10E	0.43429448190325182765	/* log_10 e */
@@ -90,12 +92,72 @@ enum Joint {
     NUM_JOINTS = 24
 };
 
+
+//Joint JointMapByJointId[] = {
+//        HeadYaw,
+//        HeadPitch,
+//
+//        LShoulderPitch,
+//        RShoulderPitch,
+//        LShoulderRoll,
+//        RShoulderRoll,
+//        LElbowYaw,
+//        RElbowYaw,
+//        LElbowRoll,
+//        RElbowRoll,
+//
+//        LHipYawPitch,
+//        RHipYawPitch,
+//        LHipRoll,
+//        RHipRoll,
+//        LHipPitch,
+//        RHipPitch,
+//        LKneePitch,
+//        RKneePitch,
+//        LAnklePitch,
+//        RAnklePitch,
+//        LAnkleRoll,
+//        RAnkleRoll,
+//};
+//
+//JointID JointIDMapByJoint[] = {
+//        JID_HEAD_1,
+//        JID_HEAD_2,
+//
+//        JID_LLEG_1,
+//        JID_LLEG_2,
+//        JID_LLEG_3,
+//        JID_LLEG_4,
+//        JID_LLEG_5,
+//        JID_LLEG_6,
+//
+//        JID_RLEG_1,
+//        JID_RLEG_2,
+//        JID_RLEG_3,
+//        JID_RLEG_4,
+//        JID_RLEG_5,
+//        JID_RLEG_6,
+//
+//        JID_LARM_1,
+//        JID_LARM_2,
+//        JID_LARM_3,
+//        JID_LARM_4,
+//
+//        JID_RARM_1,
+//        JID_RARM_2,
+//        JID_RARM_3,
+//        JID_RARM_4,
+//};
+
 extern "C"
 typedef struct Pos
 {
     float x;
     float y;
     float z;
+    float elbowx;
+    float elbowy;
+    float elbowz;
 }Pos;
 
 extern "C"

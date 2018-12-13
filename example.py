@@ -6,7 +6,10 @@ class Pos(ctypes.Structure):
     _fields_ = [
         ("x", ctypes.c_float),
         ("y", ctypes.c_float),
-        ("z", ctypes.c_float)
+        ("z", ctypes.c_float),
+        ("elbowx", ctypes.c_float),
+        ("elbowy", ctypes.c_float),
+        ("elbowz", ctypes.c_float)
     ]
 
 # map angle to radian
@@ -26,6 +29,7 @@ def getPos(want_Ang):
     angles = (ctypes.c_float*num_angles)()
     for i in range(num_angles):
         angles[i] = 0
+
 
     # declare the angles of right arm
     arm0 = 18

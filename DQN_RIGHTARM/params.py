@@ -12,9 +12,9 @@ EPISODE = 10000
 LR = 0.0001 # learning rate
 EPSILON = 0.1
 EPSILON_MAX = 0.8       # greedy policy
-EPSILON_INCREASE = 0.0001
+EPSILON_INCREASE = 0.00001
 GAMMA = 0.999                 # reward discount
-TARGET_REPLACE_ITER = 20   # target update frequency
+TARGET_REPLACE_ITER = 10   # target update frequency
 MEMORY_CAPACITY = 50000
 MAX_STEP = 1000
 
@@ -22,9 +22,9 @@ N_JOINTS = 4
 N_ACTIONS_Per_JOINT = 2
 ACTIONS_Per_JOINT = [-1, 1]   # action list for each joint
 N_ACTIONS = N_JOINTS * N_ACTIONS_Per_JOINT
-N_STATES = 3 +N_JOINTS +3                # the states is position here, like (x, y, z)
+N_STATES = 3 + 3 +3                # the states is position here, like (x, y, z)
 
-PRECISION = 100             # precision for judging if done
+PRECISION = 20            # precision for judging if done
 
 
 
@@ -34,6 +34,10 @@ def randAng():
     c = np.random.randint(-120, 120)
     d = np.random.randint(-1, 90)
 
+    # a = 50
+    # b = -50
+    # c = 50
+    # d = 50
     return [a, b, c, d]
 
 
