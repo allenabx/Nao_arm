@@ -31,6 +31,7 @@ def getPos(want_Ang):
         angles[i] = 0
 
 
+
     # declare the angles of right arm
     arm0 = 18
     for i in range(0, 4):
