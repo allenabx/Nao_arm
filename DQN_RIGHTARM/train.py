@@ -59,5 +59,5 @@ for i_episode in range(EPISODE):
         plt.plot(x, y)  # 只提供x轴，y轴参数，画最简单图形
         plt.show()
 
-torch.save(dqn.eval_net, 'eval_net.pkl')
-torch.save(dqn.target_net, 'target_net.pkl')
+        torch.save(dqn.eval_net, 'eval_net.pkl')
+        torch.save(dqn.target_net, 'target_net.pkl')

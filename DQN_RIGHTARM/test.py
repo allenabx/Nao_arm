@@ -25,7 +25,7 @@
 
 
 from DQN import DQN
-from env import *
+from Env import *
 import numpy as np
 from params import *
 import time
@@ -33,18 +33,21 @@ import time
 dqn = DQN()
 dqn.eval_net = torch.load('./eval_net.pkl')
 dqn.target_net = torch.load('./target_net.pkl')
+TARGET = np.array(getPos(randAng()))
+env = Env(TARGET)
 
-env = ArmEnv()
 curr_state = env.reset()
 stp = 0
 while True:
     action = dqn.choose_action(curr_state)
     next_state, reward, done = env.step(action)
     stp += 1
-    env.render()
-    if done:
+
+    if done[0]:
         print(stp)
         break
     curr_state = next_state
     time.sleep(0.1)
+    distance = np.linalg.norm(TARGET - curr_state.numpy()[0:3])
+    print(distance)
 
