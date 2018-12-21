@@ -54,10 +54,15 @@ class Cnet():
 
     def choose_action_C(self,angels):
         curr_state = self.get_state(angels)
+
+        print(np.linalg.norm(self.TARGET - curr_state.numpy()[0:3]))
         action = cnet.dqn.choose_action(curr_state)
+
         action_j, action_a = self.action_map(action)
+
         self.angles[self.arm0 + action_j] += self.ang2rad(action_a)
-        return self.angles
+
+        return self.rad2ang_array(self.ctype2np(self.angles))
 
     def action_map(self, action_num):
         """Map action number to action like [Joint, Angle]"""
@@ -73,20 +78,39 @@ class Cnet():
         """Map radian to angle"""
         return 180 / math.pi * rad
 
+    def ctype2np(self,ctype):
+        np = []
+        for i in range(len(ctype)):
+            np.append(ctype[i])
+        return np
 
+    def rad2ang_array(self,rads):
+        array = []
+        for i in range(len(rads)):
+            array.append(180 / math.pi * rads[i])
+        return array
+    
+cnet = Cnet()
+state = np.zeros(24)
+state = cnet.choose_action_C(state)
+while True:
+    state = cnet.choose_action_C(state)
 
+#ssss
 # cnet = Cnet()
 # temp = np.zeros( 24 )
-# temp2 = cnet.choose_action_C([0, 0, 0, 0])
+# temp2 = cnet.choose_action_C(temp)
 # for i in range(24):
 #     temp[i] = temp2[i]
 # print(temp)
 #
 # env = Env(cnet.TARGET)
 # curr_state = env.reset()
+# print(curr_state)
 # stp = 0
 # while True:
 #     action = cnet.dqn.choose_action(curr_state)
+#     print(action)
 #     next_state, reward, done = env.step(action)
 #     stp += 1
 #

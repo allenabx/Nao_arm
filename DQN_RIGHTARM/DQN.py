@@ -51,7 +51,9 @@ class DQN(object):
         self.target_net.eval()
         # input only one sample
         if np.random.uniform() < EPSILON:   # greedy
+
             actions_value = self.eval_net.forward(x.reshape(1, -1))
+
             action = int(torch.max(actions_value.squeeze(), 0)[1])
         else:   # random
             action = np.random.randint(0, N_ACTIONS)
